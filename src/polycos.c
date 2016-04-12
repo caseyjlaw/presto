@@ -126,6 +126,9 @@ char *make_polycos(char *parfilenm, infodata * idata, char *polycofilenm)
     } else if (strcmp(idata->telescope, "LWA") == 0) {
         scopechar = 'x';
         tracklen = 12;
+    } else if (strcmp(idata->telescope, "MWA") == 0) {
+        scopechar = 'k';
+	tracklen = 12;
     } else if (strcmp(idata->telescope, "SRT") == 0) {
         scopechar = 'z';
         tracklen = 12;
@@ -148,8 +151,7 @@ char *make_polycos(char *parfilenm, infodata * idata, char *polycofilenm)
     fprintf(tmpfile, "%c %d 60 12 430\n\n\n%s 60 12 %d %.5f\n",
             scopechar, tracklen, psr.jname, tracklen, fmid);
     fclose(tmpfile);
-    //sprintf(command, "echo %d %d | tempo -z -f %s > /dev/null",
-    sprintf(command, "echo %d %d | tempo -z -f pulsar.par > /dev/null",
+    sprintf(command, "echo %d %d | tempo -z -f %s > /dev/null",
             idata->mjd_i - 1, (int) ceil(epoch + T));
     if (system(command) != 0) {
         fprintf(stderr,
